@@ -12,18 +12,18 @@
 $Computers = Get-Content -Path "\\ShareNam\Computers.txt"
 $Files = Get-Content -Path "\\ShareName\Files.txt"
 $Source = "\\ShareName\RemoteDeploy"
-$Destination = "\\$computers\c$\LOCATION"
+$Destination = "\\$Computers\c$\LOCATION"
 
-write-progress -Activity 'file copy' -Status 'Copying Files'
+Write-Progress -Activity 'file copy' -Status 'Copying Files'
 
-foreach ($pc in $Computers) 
-    {$Files = Get-Content -Path "\\ShareName\Files.txt"
-        foreach ($File in $Files)
-            {Copy-Item $File -Destination "\\$pc\C$\LOCATIOn" -Force}
-    }
+foreach ($pc in $Computers) {
+    $Files = Get-Content -Path "\\ShareName\Files.txt"
+    foreach ($File in $Files)
+    { Copy-Item $File -Destination "\\$pc\C$\LOCATION" -Force }
+}
 
-  foreach ($pc in $computers)  {
+foreach ($pc in $computers) {
 		
-        Invoke-Command -ComputerName $pc -ScriptBlock {start-Process powershell -WorkingDirectory C:\LOCATION {Start-Process install.cmd -verb runas -Wait} -Wait}
+    Invoke-Command -ComputerName $pc -ScriptBlock { Start-Process powershell -WorkingDirectory C:\LOCATION { Start-Process install.cmd -Verb runas -Wait } -Wait }
 	
-                                }
+}
